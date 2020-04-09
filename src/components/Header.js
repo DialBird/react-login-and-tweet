@@ -1,9 +1,9 @@
 import React, { useContext } from 'react';
-import { Link } from "react-router-dom";
+import { Link, withRouter } from "react-router-dom";
 
 import AppContext from '../contexts/AppContext';
 
-const Header = () => {
+const Header = props => {
   const { state, setState } = useContext(AppContext);
 
   const header = {
@@ -21,7 +21,12 @@ const Header = () => {
     marginLeft: 'auto',
   };
   const handleLogin = () => {
-    setState({ loggedIn: true });
+    props.history.push('/login');
+    // setState({ loggedIn: true });
+  };
+  const handleSignup = () => {
+    props.history.push('/signup');
+    // setState({ loggedIn: true });
   };
   const handleLogout = () => {
     setState({ loggedIn: false });
@@ -34,7 +39,10 @@ const Header = () => {
       );
     } else {
       return (
-        <button onClick={handleLogin} style={loginButton}>Login</button>
+        <div style={loginButton}>
+          <button onClick={handleLogin}>Login</button>
+          <button onClick={handleSignup}>Signup</button>
+        </div>
       );
     }
   };
@@ -49,4 +57,4 @@ const Header = () => {
   );
 }
 
-export default Header;
+export default withRouter(Header);
