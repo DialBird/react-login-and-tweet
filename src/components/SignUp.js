@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
 
+import firebase from '../firebase';
+
 const SignUp = props => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    console.log(email);
-    console.log(password);
+  const handleSubmit = () => {
+    firebase.auth().createUserWithEmailAndPassword(email, password)
   };
 
   return (
