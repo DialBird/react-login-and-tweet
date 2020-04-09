@@ -7,6 +7,7 @@ import {
 } from "react-router-dom";
 
 import Dashboard from './Dashboard';
+import Header from './Header';
 import Home from './Home';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
@@ -15,6 +16,7 @@ function App() {
   return (
     <Router>
       <div>
+        <Header />
         <nav>
           <ul>
             <li>
