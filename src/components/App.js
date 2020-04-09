@@ -25,17 +25,6 @@ function App() {
           <Link to="/dashboard">Dashboard</Link>
         </li>
       );
-    } else {
-      return (
-        <React.Fragment>
-          <li>
-            <Link to="/signin">Sign In</Link>
-          </li>
-          <li>
-            <Link to="/signup">Sign Up</Link>
-          </li>
-        </React.Fragment>
-      );
     }
   };
   return (

@@ -21,7 +21,7 @@ const Header = props => {
     marginLeft: 'auto',
   };
   const handleLogin = () => {
-    props.history.push('/login');
+    props.history.push('/signin');
     // setState({ loggedIn: true });
   };
   const handleSignup = () => {
