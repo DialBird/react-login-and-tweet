@@ -1,10 +1,11 @@
 import React, { useContext } from 'react';
-import { Link, withRouter } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 
 import AuthContext from '../contexts/AuthContext';
 
-const Header = props => {
+const Header = () => {
   const { currentUser, logout } = useContext(AuthContext);
+  const history = useHistory();
   const header = {
     padding: '0 20px',
     height: '60px',
@@ -23,7 +24,7 @@ const Header = props => {
   const renderButton = () => {
     if (currentUser) {
       return (
-        <button onClick={() => logout(props.history)} style={loginButton}>Logout</button>
+        <button onClick={() => logout(history)} style={loginButton}>Logout</button>
       );
     } else {
       return (
@@ -45,4 +46,4 @@ const Header = props => {
   );
 }
 
-export default withRouter(Header);
+export default Header;

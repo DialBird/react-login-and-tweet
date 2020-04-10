@@ -1,15 +1,16 @@
 import React, { useContext } from 'react';
-import { withRouter } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 
 import AuthContext from '../contexts/AuthContext';
 
-const SignUp = props => {
+const SignUp = () => {
   const { signup } = useContext(AuthContext);
+  const history = useHistory();
 
   const handleSubmit = e => {
     e.preventDefault();
     const { email, password } = e.target.elements;
-    signup(email.value, password.value, props.history);
+    signup(email.value, password.value, history);
   };
 
   return (
@@ -32,4 +33,4 @@ const SignUp = props => {
   );
 }
 
-export default withRouter(SignUp);
+export default SignUp;
