@@ -64,12 +64,12 @@ const App = () => {
             <DashboardRoute path="/dashboard">
               <Dashboard />
             </DashboardRoute>
-            <Route path="/signin">
+            <HomeRoute path="/signin">
               <SignIn />
-            </Route>
-            <Route path="/signup">
+            </HomeRoute>
+            <HomeRoute path="/signup">
               <SignUp />
-            </Route>
+            </HomeRoute>
             <HomeRoute path="/">
               <Home />
             </HomeRoute>
