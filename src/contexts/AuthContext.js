@@ -27,6 +27,15 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const logout = async (history) => {
+    try {
+      await firebase.auth().signOut();
+      history.push("/");
+    } catch (err) {
+      alert(err);
+    }
+  };
+
   useEffect(() => {
     firebase.auth().onAuthStateChanged(setCurrentUser);
   }, []);
@@ -37,6 +46,7 @@ export const AuthProvider = ({ children }) => {
       value={{
         login: login,
         signup: signup,
+        logout: logout,
         currentUser
       }}
     >
