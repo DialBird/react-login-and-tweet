@@ -11,7 +11,7 @@ export const AuthProvider = ({ children }) => {
   const login = async (email, password, history) => {
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
-      history.push("/");
+      history.push("/dashboard");
     } catch (error) {
       alert(error);
     }
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }) => {
   const signup = async (email, password, history) => {
     try {
       await firebase.auth().createUserWithEmailAndPassword(email, password);
-      history.push("/");
+      history.push("/dashboard");
     } catch (error) {
       alert(error);
     }
