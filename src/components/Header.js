@@ -1,7 +1,11 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Link, withRouter } from "react-router-dom";
 
+import AuthContext from '../contexts/AuthContext';
+
 const Header = props => {
+  const { currentUser, logout } = useContext(AuthContext);
+
   const header = {
     padding: '0 20px',
     height: '60px',
@@ -16,37 +20,20 @@ const Header = props => {
   const loginButton = {
     marginLeft: 'auto',
   };
-  const handleLogin = () => {
-    props.history.push('/signin');
-    // setState({ loggedIn: true });
-  };
-  const handleSignup = () => {
-    props.history.push('/signup');
-    // setState({ loggedIn: true });
-  };
-  const handleLogout = () => {
-    // setState({ loggedIn: false });
-  };
 
   const renderButton = () => {
-    // if (loggedIn) {
-    //   return (
-    //     <button onClick={handleLogout} style={loginButton}>Logout</button>
-    //   );
-    // } else {
-    //   return (
-    //     <div style={loginButton}>
-    //       <button onClick={handleLogin}>Login</button>
-    //       <button onClick={handleSignup}>Signup</button>
-    //     </div>
-    //   );
-    // }
-    return (
-      <div style={loginButton}>
-        <button onClick={handleLogin}>Login</button>
-        <button onClick={handleSignup}>Signup</button>
-      </div>
-    );
+    if (currentUser) {
+      return (
+        <button onClick={() => logout(props.history)} style={loginButton}>Logout</button>
+      );
+    } else {
+      return (
+        <div style={loginButton}>
+          <Link to='/signin'>Signin</Link>
+          <Link to='/signup'>Signup</Link>
+        </div>
+      );
+    }
   };
 
   return (
