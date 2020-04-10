@@ -1,11 +1,12 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   BrowserRouter as Router,
-  Switch,
-  Route
+  Redirect,
+  Route,
+  Switch
 } from "react-router-dom";
 
-import { AuthProvider } from '../contexts/AuthContext';
+import AuthContext, { AuthProvider } from '../contexts/AuthContext';
 
 import Dashboard from './Dashboard';
 import Header from './Header';
@@ -14,24 +15,64 @@ import SignIn from './SignIn';
 import SignUp from './SignUp';
 
 const App = () => {
+  const HomeRoute = ({ children, ...rest }) => {
+    const { currentUser } = useContext(AuthContext);
+    return (
+      <Route
+        {...rest}
+        render={({ location }) =>
+            currentUser ? (
+              <Redirect
+                to={{
+                  pathname: "/dashboard",
+                  state: { from: location }
+                }}
+              />
+            ) : (
+              children
+            )
+        }
+      />
+    );
+  }
+  const DashboardRoute = ({ children, ...rest }) => {
+    const { currentUser } = useContext(AuthContext);
+    return (
+      <Route
+        {...rest}
+        render={({ location }) =>
+            currentUser ? (
+              children
+            ) : (
+              <Redirect
+                to={{
+                  pathname: "/signin",
+                  state: { from: location }
+                }}
+              />
+            )
+        }
+      />
+    );
+  }
   return (
     <AuthProvider>
       <Router>
         <div>
           <Header />
           <Switch>
-            <Route path="/dashboard">
+            <DashboardRoute path="/dashboard">
               <Dashboard />
-            </Route>
+            </DashboardRoute>
             <Route path="/signin">
               <SignIn />
             </Route>
             <Route path="/signup">
               <SignUp />
             </Route>
-            <Route path="/">
+            <HomeRoute path="/">
               <Home />
-            </Route>
+            </HomeRoute>
           </Switch>
         </div>
       </Router>
