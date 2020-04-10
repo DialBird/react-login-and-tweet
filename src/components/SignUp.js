@@ -1,13 +1,15 @@
-import React, { useState } from 'react';
+import React, { useContext } from 'react';
+import { withRouter } from "react-router-dom";
 
-import firebase from '../firebase';
+import AuthContext from '../contexts/AuthContext';
 
 const SignUp = props => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const { signup } = useContext(AuthContext);
 
-  const handleSubmit = () => {
-    firebase.auth().createUserWithEmailAndPassword(email, password)
+  const handleSubmit = e => {
+    e.preventDefault();
+    const { email, password } = e.target.elements;
+    signup(email.value, password.value, props.history);
   };
 
   return (
@@ -16,11 +18,11 @@ const SignUp = props => {
       <form className="white" onSubmit={handleSubmit}>
         <div className="input-field">
           <label htmlFor="email">Email</label>
-          <input type="email" id='email' onChange={e => setEmail(e.target.value)} />
+          <input type="email" name='email' />
         </div>
         <div className="input-field">
           <label htmlFor="password">Password</label>
-          <input type="password" id='password' onChange={e => setPassword(e.target.value)} />
+          <input type="password" name='password' />
         </div>
         <div className="input-field">
           <button className="btn pink lighten-1 z-depth-0">Sign Up</button>
@@ -30,4 +32,4 @@ const SignUp = props => {
   );
 }
 
-export default SignUp;
+export default withRouter(SignUp);

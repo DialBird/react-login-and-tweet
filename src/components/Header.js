@@ -5,13 +5,12 @@ import AuthContext from '../contexts/AuthContext';
 
 const Header = props => {
   const { currentUser, logout } = useContext(AuthContext);
-
   const header = {
     padding: '0 20px',
     height: '60px',
     background: '#eee',
     display: 'flex',
-    'align-items': 'center'
+    alignItems: 'center'
   };
   const logo = {
     textDecoration: 'none',
