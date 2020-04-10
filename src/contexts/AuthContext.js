@@ -17,6 +17,16 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
+  const loginWithTwitter = async (history) => {
+    try {
+      const provider = new firebase.auth.TwitterAuthProvider();
+      const res = await firebase.auth().signInWithPopup(provider);
+      history.push("/dashboard");
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   // 新しいユーザーを作成しログインさせる関数
   const signup = async (email, password, history) => {
     try {
@@ -47,6 +57,7 @@ export const AuthProvider = ({ children }) => {
         login: login,
         signup: signup,
         logout: logout,
+        loginWithTwitter,
         currentUser
       }}
     >
