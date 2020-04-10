@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-import firebase from '../firebase';
+import firebase, { twitterProvider } from '../firebase';
 
 const AuthContext = createContext();
 
@@ -19,8 +19,9 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithTwitter = async (history) => {
     try {
-      const provider = new firebase.auth.TwitterAuthProvider();
-      const res = await firebase.auth().signInWithPopup(provider);
+      const { credential, user } = await firebase.auth().signInWithPopup(twitterProvider);
+      console.log(credential);
+      console.log('user', user);
       history.push("/dashboard");
     } catch (error) {
       alert(error);
