@@ -1,12 +1,11 @@
-import React, { useState } from 'react';
+import React from 'react';
 import {
   BrowserRouter as Router,
   Switch,
-  Route,
-  Link
+  Route
 } from "react-router-dom";
 
-import AppContext from '../contexts/AppContext';
+import { AuthProvider } from '../contexts/AuthContext';
 
 import Dashboard from './Dashboard';
 import Header from './Header';
@@ -14,29 +13,12 @@ import Home from './Home';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
 
-const initialState = { loggedIn: false };
-
-function App() {
-  const [state, setState] = useState(initialState);
-  const renderLinkList = () => {
-    if (state.loggedIn) {
-      return (
-        <li>
-          <Link to="/dashboard">Dashboard</Link>
-        </li>
-      );
-    }
-  };
+const App = () => {
   return (
-    <AppContext.Provider value={{ state, setState }}>
+    <AuthProvider>
       <Router>
         <div>
           <Header />
-          <nav>
-            <ul>
-              {renderLinkList()}
-            </ul>
-          </nav>
           <Switch>
             <Route path="/dashboard">
               <Dashboard />
@@ -53,7 +35,7 @@ function App() {
           </Switch>
         </div>
       </Router>
-    </AppContext.Provider>
+    </AuthProvider>
   );
 }
 

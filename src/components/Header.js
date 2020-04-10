@@ -1,11 +1,7 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, withRouter } from "react-router-dom";
 
-import AppContext from '../contexts/AppContext';
-
 const Header = props => {
-  const { state, setState } = useContext(AppContext);
-
   const header = {
     padding: '0 20px',
     height: '60px',
@@ -29,22 +25,28 @@ const Header = props => {
     // setState({ loggedIn: true });
   };
   const handleLogout = () => {
-    setState({ loggedIn: false });
+    // setState({ loggedIn: false });
   };
 
   const renderButton = () => {
-    if (state.loggedIn) {
-      return (
-        <button onClick={handleLogout} style={loginButton}>Logout</button>
-      );
-    } else {
-      return (
-        <div style={loginButton}>
-          <button onClick={handleLogin}>Login</button>
-          <button onClick={handleSignup}>Signup</button>
-        </div>
-      );
-    }
+    // if (loggedIn) {
+    //   return (
+    //     <button onClick={handleLogout} style={loginButton}>Logout</button>
+    //   );
+    // } else {
+    //   return (
+    //     <div style={loginButton}>
+    //       <button onClick={handleLogin}>Login</button>
+    //       <button onClick={handleSignup}>Signup</button>
+    //     </div>
+    //   );
+    // }
+    return (
+      <div style={loginButton}>
+        <button onClick={handleLogin}>Login</button>
+        <button onClick={handleSignup}>Signup</button>
+      </div>
+    );
   };
 
   return (
