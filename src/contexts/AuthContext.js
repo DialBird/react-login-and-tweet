@@ -1,6 +1,7 @@
 import React, { createContext, useEffect, useState } from 'react';
 
 import firebase, { twitterProvider } from '../firebase';
+import { createUser } from '../dbs/users';
 
 const AuthContext = createContext();
 
@@ -9,12 +10,10 @@ export const AuthProvider = ({ children }) => {
 
   // ユーザーをログインさせる関数
   const login = async (email, password, history) => {
-    try {
-      await firebase.auth().signInWithEmailAndPassword(email, password);
-      history.push("/dashboard");
-    } catch (error) {
+    await firebase.auth().signInWithEmailAndPassword(email, password).catch(error => {
       alert(error);
-    }
+    });
+    history.push("/dashboard");
   };
 
   const loginWithTwitter = async (history) => {
@@ -29,12 +28,12 @@ export const AuthProvider = ({ children }) => {
 
   // 新しいユーザーを作成しログインさせる関数
   const signup = async (email, password, history) => {
-    try {
-      await firebase.auth().createUserWithEmailAndPassword(email, password);
-      history.push("/dashboard");
-    } catch (error) {
-      alert(error);
-    }
+    const { user } =
+      await firebase.auth().createUserWithEmailAndPassword(email, password).catch(error => {
+        alert(error);
+      });
+    await createUser(user);
+    history.push("/dashboard");
   };
 
   const logout = async (history) => {
