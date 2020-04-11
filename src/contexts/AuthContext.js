@@ -19,9 +19,8 @@ export const AuthProvider = ({ children }) => {
 
   const loginWithTwitter = async (history) => {
     try {
-      const { credential, user } = await firebase.auth().signInWithPopup(twitterProvider);
-      console.log(credential);
-      console.log('user', user);
+      const { credential } = await firebase.auth().signInWithPopup(twitterProvider);
+      localStorage.setItem('credential', JSON.stringify(credential));
       history.push("/dashboard");
     } catch (error) {
       alert(error);
