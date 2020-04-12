@@ -1,6 +1,6 @@
 import React, { createContext, useEffect, useState } from 'react';
 
-import firebase, { twitterProvider } from '../firebase';
+import firebase from '../firebase';
 import { createUser } from '../dbs/users';
 
 const AuthContext = createContext();
@@ -14,16 +14,6 @@ export const AuthProvider = ({ children }) => {
       alert(error);
     });
     history.push("/dashboard");
-  };
-
-  const loginWithTwitter = async (history) => {
-    try {
-      const { credential } = await firebase.auth().signInWithPopup(twitterProvider);
-      localStorage.setItem('credential', JSON.stringify(credential));
-      history.push("/dashboard");
-    } catch (error) {
-      alert(error);
-    }
   };
 
   // 新しいユーザーを作成しログインさせる関数
@@ -56,7 +46,6 @@ export const AuthProvider = ({ children }) => {
         login: login,
         signup: signup,
         logout: logout,
-        loginWithTwitter,
         currentUser
       }}
     >
