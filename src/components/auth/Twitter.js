@@ -8,8 +8,14 @@ const Twitter = () => {
   const { setAccessToken, setAccessSecret } = useContext(TwitterContext);
 
   useEffect(() => {
-    console.log(window.location.search);
-  }, [])
+    const url = new URL(window.location.href);
+    const params = url.searchParams;
+    const token = params.get('token');
+    const secret = params.get('secret');
+    setAccessToken(token);
+    setAccessSecret(secret);
+    setAuthenticating(false);
+  }, [setAccessToken, setAccessSecret])
 
   return (
     <React.Fragment>
