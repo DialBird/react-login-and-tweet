@@ -7,12 +7,14 @@ import {
 } from "react-router-dom";
 
 import AuthContext, { AuthProvider } from '../contexts/AuthContext';
+import { TwitterProvider } from '../contexts/TwitterContext';
 
 import Dashboard from './Dashboard';
 import Header from './Header';
 import Home from './Home';
 import SignIn from './SignIn';
 import SignUp from './SignUp';
+import Twitter from './auth/Twitter';
 
 const App = () => {
   const HomeRoute = ({ children, ...rest }) => {
@@ -57,25 +59,31 @@ const App = () => {
   }
   return (
     <AuthProvider>
-      <Router>
-        <div>
-          <Header />
-          <Switch>
-            <DashboardRoute path="/dashboard">
-              <Dashboard />
-            </DashboardRoute>
-            <HomeRoute path="/signin">
-              <SignIn />
-            </HomeRoute>
-            <HomeRoute path="/signup">
-              <SignUp />
-            </HomeRoute>
-            <HomeRoute path="/">
-              <Home />
-            </HomeRoute>
-          </Switch>
-        </div>
-      </Router>
+      <TwitterProvider>
+        <Router>
+          <div>
+            <Header />
+            <Switch>
+              <DashboardRoute path="/dashboard">
+                <Dashboard />
+              </DashboardRoute>
+              <Route path='/auth/twitter/callback' component={Twitter} />
+              <Route path="/signin">
+                <SignIn />
+              </Route>
+              <HomeRoute path="/signin">
+                <SignIn />
+              </HomeRoute>
+              <HomeRoute path="/signup">
+                <SignUp />
+              </HomeRoute>
+              <HomeRoute path="/">
+                <Home />
+              </HomeRoute>
+            </Switch>
+          </div>
+        </Router>
+      </TwitterProvider>
     </AuthProvider>
   );
 }
