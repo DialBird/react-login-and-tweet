@@ -1,7 +1,7 @@
 import React, { useEffect, useState, useContext } from 'react';
 import { Redirect } from 'react-router-dom';
 
-import TwitterContext from '../contexts/TwitterContext';
+import TwitterContext from '../../contexts/TwitterContext';
 
 const Twitter = () => {
   const [authenticating, setAuthenticating] = useState(true);

@@ -68,9 +68,6 @@ const App = () => {
                 <Dashboard />
               </DashboardRoute>
               <Route path='/auth/twitter/callback' component={Twitter} />
-              <Route path="/signin">
-                <SignIn />
-              </Route>
               <HomeRoute path="/signin">
                 <SignIn />
               </HomeRoute>
