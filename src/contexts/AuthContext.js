@@ -8,6 +8,7 @@ const AuthContext = createContext();
 export const AuthProvider = ({ children }) => {
   const [currentUser, setCurrentUser] = useState(null);
   const [token, setToken] = useState('');
+  const [isAuthReady, setIsAuthReady] = useState(false);
 
   // ユーザーをログインさせる関数
   const login = async (email, password, history) => {
@@ -37,24 +38,25 @@ export const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
-    firebase.auth().onAuthStateChanged(setCurrentUser);
+    firebase.auth().onAuthStateChanged(user => {
+      setCurrentUser(user);
+      setIsAuthReady(true);
+      if (user) {
+        user.getIdToken()
+          .then(setToken)
+          .catch(error => {
+            throw new Error('token is required')
+          })
+      }
+    });
   }, []);
-
-  useEffect(() => {
-    if (!currentUser) return;
-
-    currentUser.getIdToken(true)
-      .then(setToken)
-      .catch(error => {
-        throw new Error('useAppState must be used within the AppStateProvider')
-      })
-  }, [currentUser])
 
   return (
     // Contextを使用して認証に必要な情報をコンポーネントツリーに流し込む。
     <AuthContext.Provider
       value={{
         currentUser,
+        isAuthReady,
         login,
         logout,
         signup,
